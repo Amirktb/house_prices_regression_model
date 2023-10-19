@@ -4,7 +4,7 @@ from typing import Dict, List, Optional, Sequence
 from pydantic import BaseModel
 from strictyaml import YAML, load
 
-import regression_model 
+import regression_model
 
 # project directories
 PACKAGE_ROOT = Path(regression_model.__file__).resolve().parent
@@ -22,6 +22,7 @@ class AppConfig(BaseModel):
     training_data_file: str
     test_data_file: str
     pipeline_save_file: str
+
 
 class ModelConfig(BaseModel):
     """
@@ -43,7 +44,7 @@ class ModelConfig(BaseModel):
     numericals_log_vars: Sequence[str]
     binarize_vars: Sequence[str]
     qual_vars: List[str]
-    exposure_vars: List[str] 
+    exposure_vars: List[str]
     finish_vars: List[str]
     garage_vars: List[str]
     categorical_vars: Sequence[str]
@@ -52,6 +53,7 @@ class ModelConfig(BaseModel):
     garage_mappings: Dict[str, int]
     finish_mappings: Dict[str, int]
 
+
 class Config(BaseModel):
     """
     Master config object.
@@ -59,23 +61,26 @@ class Config(BaseModel):
     app_config: AppConfig
     model_config: ModelConfig
 
+
 def find_config_file() -> Path:
     """Locate the configuration file."""
     if CONFIG_FILE_PATH.is_file():
         return CONFIG_FILE_PATH
     raise Exception(f"Config file not found at {CONFIG_FILE_PATH!r}")
 
+
 def fetch_config_from_yaml(cfg_path: Optional[Path] = None) -> YAML:
     """Parse YAML containing the package configuration."""
 
     if not cfg_path:
         cfg_path = find_config_file()
-    
+
     if cfg_path:
         with open(cfg_path, "r") as conf_file:
             parsed_config = load(conf_file.read())
             return parsed_config
     raise OSError(f"Did not find config file at path: {cfg_path}")
+
 
 def create_and_validate_config(parsed_config: YAML = None) -> Config:
     """Run validation on config values."""
