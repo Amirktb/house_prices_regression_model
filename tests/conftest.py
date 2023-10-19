@@ -1,6 +1,6 @@
 import pytest
 
-from regression_model.config.core. import config
+from regression_model.config.core import config
 from regression_model.processing.data_manager import load_dataset
 
 @pytest.fixture()

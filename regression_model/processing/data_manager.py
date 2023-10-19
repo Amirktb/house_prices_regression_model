@@ -24,7 +24,7 @@ def save_pipeline(*, pipeline_to_save: Pipeline) -> None:
     trained models can be called when the package 
     is published.
     """
-    save_file_name = f"{config.app_config.pipeline_save_file}{_version}"
+    save_file_name = f"{config.app_config.pipeline_save_file}{_version}.pkl"
     save_path = TRAINED_MODEL_DIR / save_file_name
 
     remove_old_pipeline(files_to_keep=[save_file_name])
